@@ -1,0 +1,68 @@
+.todo-item {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
+    // border-bottom: 1px solid #f1f1f1;
+    user-select: none;
+    position: relative;
+
+    li:last-child & {
+        border-bottom: none;
+    }
+
+    &:hover {
+        background-color: #fafafa;
+        transition: 0.5s;
+    }
+    
+    .checkmark {
+        height: 25px;
+        width: 25px;
+        background-color: #eeeeee80;
+        position: relative;
+        margin-right: 10px;
+        border: 1px solid #b5b5b5;
+        flex: 0 0 25px;
+
+        svg {
+            visibility: hidden;
+            display: block;
+            position: absolute;
+            pointer-events: none;
+        }
+    }
+
+    .todo-title {
+        margin-left: 5px;
+        margin-right: 30px;
+    }
+
+    .delete-button {
+        box-sizing: border-box;
+        width: 40px;
+        text-align: right;
+        display: inline-block;
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        padding-right: 10px;
+        line-height: 50px;
+        opacity: 0.25;
+        transition: 0.5s;
+
+        &:hover {
+            opacity: 0.85;
+        }
+    }
+    
+    &.checked {
+
+        .checkmark {
+            svg {
+                visibility: visible;
+            }
+        }
+    }
+}

@@ -1,0 +1,103 @@
+@font-face {
+    font-family: OpenSansLightInternal;
+    src: url('../../assets/fonts/OpenSans-Light.ttf') format('truetype');
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: RobotoThinInternal;
+    src: url('../../assets/fonts/Roboto-Thin.ttf') format('truetype');
+    font-weight: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: RobotoThinInternal, 'Segoe UI Light', OpenSansLightInternal, 'Lucida Grande', Verdana, Arial, Helvetica, sans-serif;
+    font-size: 32px;
+    color: #696969;
+}
+
+html, body {
+    height: 100%;
+}
+
+.wrapper {
+    display: flex;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    
+    /* width */
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        background: rgb(185, 185, 185); 
+    }
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+        background: rgb(129, 129, 129); 
+    }
+}
+
+.todo-list-wrapper {
+    min-width: 720px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    // justify-content: center;
+    
+    .todo-list-scroll-container {
+        display: flex;
+        width: 100%;
+        flex: 1 0.01 100%;
+        flex-direction: column;
+        box-sizing: border-box;
+
+        .todo-list {
+            list-style: none;
+            width: 100%;
+            flex: 1 0 100%;
+
+            .todo-placeholder-wrapper {
+                border-bottom: 1px solid #f1f1f1;
+            }
+        }
+    }
+
+    .todo-list-top-spacer {
+        flex: 0 1000 10vh;
+        width: 100%;
+    }
+
+    .todo-list-bottom-spacer {
+        flex: 0 100000 30vh;
+        width: 100%;
+    }
+}
+
+.storage-usage-bar {
+    height: 10px;
+    width: 100%;
+
+    .indicator {
+        height: 10px;
+        background-color: dodgerblue;
+    }
+}

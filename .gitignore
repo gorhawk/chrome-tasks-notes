@@ -1,0 +1,8 @@
+.project
+.settings/
+nbproject/
+node_modules/
+.idea/
+.vscode/
+dist/
+/app.js

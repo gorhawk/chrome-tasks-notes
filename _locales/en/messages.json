@@ -1,0 +1,12 @@
+{
+	"applicationName" : {
+		"message" : "Simple tasks",
+		"description" : "The name of the extension."
+	},
+	
+	"applicationDescription" : {
+		"message" : "This app does something extremely simple and useful.",
+		"description" : "The description of the extension."
+	}
+	
+}
