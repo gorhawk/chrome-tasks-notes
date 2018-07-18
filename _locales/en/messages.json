@@ -1,11 +1,11 @@
 {
 	"applicationName" : {
-		"message" : "Simple tasks",
+		"message" : "Tasks and notes tab",
 		"description" : "The name of the extension."
 	},
 	
 	"applicationDescription" : {
-		"message" : "This app does something extremely simple and useful.",
+		"message" : "Manage your tasks and notes on a dedicated tab and sync them across your Chrome browsers.",
 		"description" : "The description of the extension."
 	}
 	

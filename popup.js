@@ -1,3 +1,3 @@
 document.addEventListener('DOMContentLoaded', function() {
-    chrome.browser.openTab({url:"index.html"});	
+    chrome.tabs.create({url:"index.html"});
 });

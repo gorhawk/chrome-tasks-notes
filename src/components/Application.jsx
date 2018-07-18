@@ -3,9 +3,8 @@ import React from "react"
 import { connect } from "react-redux"
 import Todo from "./Todo.jsx"
 import TodoInput from "./TodoInput.jsx"
-import { toggleTodo, removeTodo, moveTodoInList } from "../../actions"
+import { toggleTodo, removeTodo, moveTodoInList } from "../redux/actions"
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-
 
 class Application extends React.Component {
     constructor(props) {
@@ -70,7 +69,7 @@ class Application extends React.Component {
                 <div className="todo-list-scroll-container">
                     <Droppable droppableId={this.props.activeListId} type="TODO">
                         {(provided, snapshot) => <div ref={provided.innerRef} className="todo-list">
-                            {activeListElements}                      
+                            {activeListElements}
                             {provided.placeholder}
                         </div>}
                     </Droppable>
@@ -84,6 +83,8 @@ class Application extends React.Component {
     }
 }
 
-const mapStateToProps = state => state
+const mapStateToProps = state => ({
+    ...state.global
+})
 
 export default Application = connect(mapStateToProps)(Application)

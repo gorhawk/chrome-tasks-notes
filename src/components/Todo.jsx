@@ -1,36 +1,91 @@
 import "./Todo.scss"
 import React from "react"
 import { connect } from "react-redux"
-import { createClassName } from "../../utility"
+import { createClassName } from "../../utility.js"
 import Checkmark from './Checkmark.jsx'
-import { toggleTodo, removeTodo } from "../../actions"
+import { toggleTodo, removeTodo, changeTodo } from "../redux/actions.js"
+import TodoTitleEditor from "./TodoTitleEditor.jsx"
 
 class Todo extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            isEditing: false,
+        }
+    }
+
     onDeleteButtonClick = event => {
         event.preventDefault()
         event.stopPropagation()
         this.props.onRemoveTodoClick(this.props.id, this.props.listId)
     }
 
-    className = () => createClassName("todo-item", this.props.isCompleted && "checked")
+    onTodoTitleClick = event => {
+        event.preventDefault()
+        event.stopPropagation()
+        this.startEditing()
+    }
+
+    startEditing = () => {
+        this.setState(prevState => prevState.isEditing ? {} : {isEditing: true})
+    }
+
+    stopEditing = () => {
+        this.setState({ isEditing: false })
+    }
+
+    onTodoClick = e => {
+        this.props.onTodoClick(this.props.id)
+    }
+
+    onFinishEditing = ({ value }) => {
+        this.stopEditing()
+        this.props.onFinishEditing(this.props.id, {
+            title: value
+        })
+    }
+
+    onCancelEditing = () => {
+        this.stopEditing()
+    }
+
+    className = () => createClassName("todo-item", this.props.isCompleted && "checked", this.state.isEditing && "editing")
+
+    renderTitle = () => {
+        if (this.state.isEditing) {
+            return <TodoTitleEditor
+                value={this.props.title}
+                onFinishEditing={this.onFinishEditing}
+                onCancelEditing={this.onCancelEditing}
+            />
+        } else {
+            return <span className="todo-title" onClick={this.onTodoTitleClick}>
+                {this.props.title}
+            </span>
+        }
+    }
     
-    render = () => <div className={this.className()} onClick={e => this.props.onTodoClick(this.props.id)}>
+    render = () => <div className={this.className()} onClick={this.onTodoClick} onBlur={this.cancelEditing}>
         <div className="checkmark">
             <Checkmark/>
         </div>
-        {/* todo contenteditable */}
-        <div className="todo-title">{this.props.title}</div>
-        <div className="delete-button" onClick={e=> this.onDeleteButtonClick(e)}>
-            <span>&times;</span>
+        <div className="todo-title-flex-wrapper">
+            {this.renderTitle()}
+        </div>
+        <div className="delete-button" onClick={this.onDeleteButtonClick}>
+            <div>&times;</div>
         </div>
     </div>
 }
 
-const mapStateToProps = state => state
+const mapStateToProps = state => ({
+    
+})
 
 const mapDispatchToProps = dispatch => ({
+    onFinishEditing: (id, newProps) => dispatch(changeTodo(id, newProps)),
     onTodoClick: id => dispatch(toggleTodo(id)),
     onRemoveTodoClick: (id, listId) => dispatch(removeTodo(id, listId))
 })
 
-export default Todo = connect(mapStateToProps, mapDispatchToProps)(Todo)
+export default Todo = connect(null, mapDispatchToProps)(Todo)

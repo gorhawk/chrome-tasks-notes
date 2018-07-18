@@ -4,25 +4,20 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import logger from 'redux-logger'
 import thunk from 'redux-thunk'
-import rootReducer from './reducers'
+import rootReducer from './src/redux/rootReducer'
 import Application from "./src/components/Application.jsx"
-import initialState from './initialState'
-import { loadState } from './src/storage';
+import { loadState } from './src/storage.js'
 
-let windowLoaded = false
-
-const init = state => {
-    console.log(state);
-    const data = state || initialState
+const init = globalState => {
+    console.log(globalState)
+    const initialState = {
+        global: globalState
+    }
     const wrapper = document.getElementById('js-wrapper')
-    const store = createStore(rootReducer, data, applyMiddleware(thunk, logger))
+    const store = createStore(rootReducer, initialState, applyMiddleware(thunk, logger))
     const app = <Application/>
     const provider = <Provider store={store}>{app}</Provider>
     ReactDOM.render(provider, wrapper)
 }
 
 loadState(init)
-
-window.addEventListener('load', e => {
-    windowLoaded = true
-});

@@ -1,7 +1,7 @@
 import "./TodoInput.scss"
 import React from "react"
 import { connect } from "react-redux"
-import { addTodo } from "../../actions";
+import { addTodo } from "../redux/actions.js";
 
 class TodoInput extends React.Component {
     constructor(props) {
@@ -23,7 +23,7 @@ class TodoInput extends React.Component {
         this.setState({value: ''});
     }
 
-    render = props => <div className="todo-input-wrapper">
+    render = () => <div className="todo-input-wrapper">
         <input
             type="text"
             className="todo-input"

@@ -1,12 +1,9 @@
-import { combineReducers } from 'redux'
 import * as Actions from './actions.js'
-import {omit, without, clamp, todoOccurrenceCount} from './utility.js'
+import {omit, without, clamp, todoOccurrenceCount} from '../../utility.js'
+import createReducerMappingApplication from './reducerMapping.js'
+import initialState from './initialState.js';
 
-const noopReducer = (state, action) => state
-
-const actionReducerMap = {
-    "@@redux/INIT": noopReducer,
-}
+const actionReducerMap = {}
 
 actionReducerMap[Actions.TOGGLE_TODO] = (state, action) => ({
     ...state,
@@ -75,15 +72,18 @@ actionReducerMap[Actions.ADD_TODO] = (state, action) => ({
     }
 })
 
-const applyReducerMapping = (state = initialState, action) => {
-    const reducer = actionReducerMap[action.type]
-    if (typeof reducer !== 'function') {
-        console.warn('Reducer not mapped for action:', action)
-        return state
+actionReducerMap[Actions.CHANGE_TODO] = (state, action) => ({
+    ...state,
+    todos: {
+        ...state.todos,
+        [action.id]: {
+            id: action.id,
+            ...action.newProps
+        }
     }
-    return reducer(state, action)
-}
+})
 
-const rootReducer = (state, action) => applyReducerMapping(state, action)
+const applyReducerMapping = createReducerMappingApplication(initialState, actionReducerMap)
+const globalReducer = (state, action) => applyReducerMapping(state, action)
 
-export default rootReducer
+export default globalReducer
