@@ -102,3 +102,21 @@ html, body {
         background-color: dodgerblue;
     }
 }
+
+.button {
+    border: none;
+    background-color: inherit;
+    padding: 14px 28px;
+    cursor: pointer;
+    display: inline-block;
+
+    &:hover {
+        background: #eee;
+    }
+}
+
+.clear-completed-button {
+    position: fixed;
+    left: 0;
+    top: 0;
+}

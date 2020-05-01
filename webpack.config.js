@@ -1,15 +1,18 @@
+const webpack = require('webpack');
 const path = require('path');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+
+const IS_PROD = process.env.NODE_ENV === "production";
 
 module.exports = {
     entry: {
         main: './main.js'
     },
+    devtool: 'inline-source-map',
     output: {
         filename: '[name].js',
         path: path.resolve(__dirname, 'dist')
     },
-
     module: {
         rules: [
             {
@@ -33,6 +36,11 @@ module.exports = {
             }
         ]
     },
+    plugins: [
+        new webpack.DefinePlugin({
+            ENV_PRODUCTION: JSON.stringify(IS_PROD),
+        })
+    ]
 
     // plugins: [
     //     new UglifyJsPlugin({

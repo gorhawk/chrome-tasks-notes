@@ -3,7 +3,7 @@ import React from "react"
 import { connect } from "react-redux"
 import Todo from "./Todo.jsx"
 import TodoInput from "./TodoInput.jsx"
-import { toggleTodo, removeTodo, moveTodoInList } from "../redux/actions"
+import { toggleTodo, removeTodo, moveTodoInList, clearCompletedTodos } from "../redux/actions"
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 class Application extends React.Component {
@@ -79,6 +79,9 @@ class Application extends React.Component {
                     <div className="indicator" style={{width: `${Math.trunc(this.state.storageUsagePercent)}%`}}/>
                 </div> */}
             </div>
+            <button className="button clear-completed-button" onClick={() => this.props.clearCompleted(this.props.activeListId)}>
+                Clear completed
+            </button>
         </DragDropContext>
     }
 }
@@ -87,4 +90,9 @@ const mapStateToProps = state => ({
     ...state.global
 })
 
-export default Application = connect(mapStateToProps)(Application)
+const mapDispatchToProps = dispatch => ({
+    dispatch,
+    clearCompleted: listId => dispatch(clearCompletedTodos(listId))
+})
+
+export default Application = connect(mapStateToProps, mapDispatchToProps)(Application)

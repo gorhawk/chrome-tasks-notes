@@ -6,7 +6,7 @@ class TodoTitleEditor extends React.Component {
         this.inputRef = React.createRef()
         this.state = {
             value: props.value,
-            size: props.value.length
+            initialWidth: this.props.initialWidth
         }
     }
 
@@ -28,7 +28,7 @@ class TodoTitleEditor extends React.Component {
         ref={this.inputRef}
         className="todo-title-editor"
         type="text"
-        size={this.state.size}
+        style={{ width: this.state.initialWidth }}
         value={this.state.value}
         onChange={this.handleChange}
         onKeyDown={this.handleKeyDown}

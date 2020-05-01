@@ -9,8 +9,10 @@ import TodoTitleEditor from "./TodoTitleEditor.jsx"
 class Todo extends React.Component {
     constructor(props) {
         super(props)
+        this.titleDisplayRef = React.createRef()
         this.state = {
             isEditing: false,
+            titleWidth: null,
         }
     }
 
@@ -27,7 +29,10 @@ class Todo extends React.Component {
     }
 
     startEditing = () => {
-        this.setState(prevState => prevState.isEditing ? {} : {isEditing: true})
+        this.setState(prevState => prevState.isEditing ? {} : {
+            isEditing: true,
+            titleWidth: this.titleDisplayRef.current ? this.titleDisplayRef.current.offsetWidth : null
+        })
     }
 
     stopEditing = () => {
@@ -55,11 +60,12 @@ class Todo extends React.Component {
         if (this.state.isEditing) {
             return <TodoTitleEditor
                 value={this.props.title}
+                initialWidth={this.state.titleWidth}
                 onFinishEditing={this.onFinishEditing}
                 onCancelEditing={this.onCancelEditing}
             />
         } else {
-            return <span className="todo-title" onClick={this.onTodoTitleClick}>
+            return <span ref={this.titleDisplayRef} className="todo-title"  onClick={this.onTodoTitleClick}>
                 {this.props.title}
             </span>
         }

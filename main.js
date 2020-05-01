@@ -14,7 +14,11 @@ const init = globalState => {
         global: globalState
     }
     const wrapper = document.getElementById('js-wrapper')
-    const store = createStore(rootReducer, initialState, applyMiddleware(thunk, logger))
+    const middleware = [thunk]
+    if (ENV_PRODUCTION) {
+        middleware.push(logger);
+    }
+    const store = createStore(rootReducer, initialState, applyMiddleware(...middleware))
     const app = <Application/>
     const provider = <Provider store={store}>{app}</Provider>
     ReactDOM.render(provider, wrapper)

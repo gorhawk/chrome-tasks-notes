@@ -16,21 +16,34 @@ actionReducerMap[Actions.TOGGLE_TODO] = (state, action) => ({
     }
 })
 
-actionReducerMap[Actions.REMOVE_TODO] = (state, action) => {
-    const list = state.todoLists[action.listId]
-    const todoIndex = list.todoIds.indexOf(action.id)
-    const occurrenceCount = todoOccurrenceCount(state.todoLists, action.id)
+const removeTodoFromList = (state, listId, todoId) => {
+    const list = state.todoLists[listId]
+    const todoIndex = list.todoIds.indexOf(todoId)
+    const occurrenceCount = todoOccurrenceCount(state.todoLists, todoId)
     return {
         ...state,
-        todos: (occurrenceCount === 1) ? omit(state.todos, action.id) : state.todos,
+        todos: (occurrenceCount === 1) ? omit(state.todos, todoId) : state.todos,
         todoLists: {
             ...state.todoLists,
-            [action.listId]: {
+            [listId]: {
                 ...list,
                 todoIds: without(list.todoIds, todoIndex)
             }
         }
     }
+}
+
+actionReducerMap[Actions.REMOVE_TODO] = (state, action) => removeTodoFromList(state, action.listId, action.id)
+
+actionReducerMap[Actions.CLEAR_COMPLETED_TODOS] = (state, action) => {
+    let newState = state
+    const list = state.todoLists[action.listId]
+    Object.keys(state.todos).filter(todoId => (
+        state.todos[todoId].isCompleted && list.todoIds.includes(todoId)
+    )).forEach(todoId => {
+        newState = removeTodoFromList(newState, action.listId, todoId)
+    })
+    return newState
 }
 
 actionReducerMap[Actions.MOVE_TODO_IN_LIST] = (state, action) => {
