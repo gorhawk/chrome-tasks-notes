@@ -1,6 +1,8 @@
 # Chrome Tasks And Notes Tab
 
-Simple, synced todo management in a separate tab.  
+Simple, synced todo management in a separate tab.
+
+[Visit in the Chrome Web Store](https://chrome.google.com/webstore/detail/hnpkfibfpjnliookebflfogcgmihcbkc)
 
 ## Extension info
 This will **not** replace your new tab. The reason for this is the permission for replacing the new tab is not optional, so users cannot turn it off, but you can always set your homepage manually to this extension.
