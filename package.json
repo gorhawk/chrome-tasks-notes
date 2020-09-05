@@ -30,7 +30,7 @@
     "css-loader": "^0.28.11",
     "keycode-js": "0.0.4",
     "lodash": "^4.17.19",
-    "node-sass": "^4.9.0",
+    "node-sass": "^4.13.1",
     "randomstring": "^1.1.5",
     "react": "^16.4.1",
     "react-beautiful-dnd": "^4.0.1",
