@@ -39,7 +39,6 @@
 
     .todo-title-flex-wrapper {
         flex: 1 1 auto;
-        overflow: auto;
     }
 
     .todo-title, .todo-title-editor {
@@ -63,8 +62,7 @@
     }
 
     .todo-title-editor {
-        outline: 2px solid #9eb7ef;
-        outline-style: dashed;
+        outline: 2px dashed #9eb7ef;
     }
 
     .delete-button {

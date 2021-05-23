@@ -74,7 +74,6 @@ class Application extends React.Component {
                         </div>}
                     </Droppable>
                 </div>
-                <div className="todo-list-bottom-spacer"/>
                 {/* <div className="storage-usage-bar">
                     <div className="indicator" style={{width: `${Math.trunc(this.state.storageUsagePercent)}%`}}/>
                 </div> */}

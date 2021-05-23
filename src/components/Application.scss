@@ -24,7 +24,7 @@ html, body {
 
 .wrapper {
     display: flex;
-    position: fixed;
+    // position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
@@ -83,12 +83,7 @@ html, body {
     }
 
     .todo-list-top-spacer {
-        flex: 0 1000 10vh;
-        width: 100%;
-    }
-
-    .todo-list-bottom-spacer {
-        flex: 0 100000 30vh;
+        height: 10vh;
         width: 100%;
     }
 }
