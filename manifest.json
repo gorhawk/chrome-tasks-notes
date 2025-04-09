@@ -1,10 +1,11 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "__MSG_applicationName__",
   "description": "__MSG_applicationDescription__",
   "version": "0.1.2",
   "default_locale": "en",
-  "browser_action": {
+  "action": {
+    "default_title": "__MSG_applicationName__",
     "default_icon": "assets/img/ic_check_black_24dp_2x.png",
     "default_popup": "popup.html"
   },
