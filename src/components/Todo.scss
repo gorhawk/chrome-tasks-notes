@@ -1,91 +1,91 @@
 .todo-item {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    padding: 10px;
-    // border-bottom: 1px solid #f1f1f1;
-    user-select: none;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px;
+  // border-bottom: 1px solid #f1f1f1;
+  user-select: none;
+  position: relative;
+
+  &.editing {
+    cursor: auto;
+  }
+
+  li:last-child & {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background-color: #fafafa;
+    transition: 0.5s;
+  }
+
+  .checkmark {
+    height: 25px;
+    width: 25px;
+    background-color: #eeeeee80;
     position: relative;
+    margin-right: 10px;
+    border: 1px solid #b5b5b5;
+    flex: 0 0 25px;
 
-    &.editing {
-        cursor: auto;
+    svg {
+      visibility: hidden;
+      display: block;
+      position: absolute;
+      pointer-events: none;
+    }
+  }
+
+  .todo-title-flex-wrapper {
+    flex: 1 1 auto;
+  }
+
+  .todo-title,
+  .todo-title-editor {
+    margin-left: 3px;
+    margin-right: 3px;
+    padding: 2px 5px;
+    cursor: text;
+    box-sizing: border-box;
+    display: inline-block;
+    border: none;
+  }
+
+  .todo-title {
+    &:hover {
+      box-shadow: 0px 0px 1px 1px #9494942c inset;
     }
 
-    li:last-child & {
-        border-bottom: none;
+    &:focus {
+      box-shadow: 0px 2px 8px 2px #e2e2e244;
     }
+  }
+
+  .todo-title-editor {
+    outline: 2px dashed #9eb7ef;
+  }
+
+  .delete-button {
+    box-sizing: border-box;
+    text-align: right;
+    display: inline-block;
+    padding-right: 10px;
+    line-height: 50px;
+    opacity: 0.25;
+    transition: 0.5s;
+    flex: 0 0 auto;
 
     &:hover {
-        background-color: #fafafa;
-        transition: 0.5s;
+      opacity: 0.85;
     }
-    
+  }
+
+  &.checked {
     .checkmark {
-        height: 25px;
-        width: 25px;
-        background-color: #eeeeee80;
-        position: relative;
-        margin-right: 10px;
-        border: 1px solid #b5b5b5;
-        flex: 0 0 25px;
-
-        svg {
-            visibility: hidden;
-            display: block;
-            position: absolute;
-            pointer-events: none;
-        }
+      svg {
+        visibility: visible;
+      }
     }
-
-    .todo-title-flex-wrapper {
-        flex: 1 1 auto;
-    }
-
-    .todo-title, .todo-title-editor {
-        margin-left: 3px;
-        margin-right: 3px;
-        padding: 2px 5px;
-        cursor: text;
-        box-sizing: border-box;
-        display: inline-block;
-        border: none;
-    }
-
-    .todo-title {
-        &:hover {
-            box-shadow: 0px 0px 1px 1px #9494942c inset;
-        }
-
-        &:focus {
-            box-shadow: 0px 2px 8px 2px #e2e2e244;
-        }
-    }
-
-    .todo-title-editor {
-        outline: 2px dashed #9eb7ef;
-    }
-
-    .delete-button {
-        box-sizing: border-box;
-        text-align: right;
-        display: inline-block;
-        padding-right: 10px;
-        line-height: 50px;
-        opacity: 0.25;
-        transition: 0.5s;
-        flex: 0 0 auto;
-
-        &:hover {
-            opacity: 0.85;
-        }
-    }
-    
-    &.checked {
-
-        .checkmark {
-            svg {
-                visibility: visible;
-            }
-        }
-    }
+  }
 }

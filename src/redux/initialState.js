@@ -1,17 +1,17 @@
-import { generateRandomKeys } from '../../utility.js'
+import { generateRandomKeys } from "../../utility.js";
 
-const initialTodoListId = generateRandomKeys(1)
+const initialTodoListId = generateRandomKeys(1);
 
 const initialState = {
-    todos: {},
-    todoLists: {
-        [initialTodoListId]: {
-            id: initialTodoListId,
-            todoIds: [],
-            isSyncedWithChrome: true
-        }
+  todos: {},
+  todoLists: {
+    [initialTodoListId]: {
+      id: initialTodoListId,
+      todoIds: [],
+      isSyncedWithChrome: true,
     },
-    activeListId: initialTodoListId,
-}
+  },
+  activeListId: initialTodoListId,
+};
 
-export default initialState
+export default initialState;

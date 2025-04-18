@@ -1,5 +1,5 @@
 const initialState = {
-    todoInEdit: null
-}
+  todoInEdit: null,
+};
 
-export default initialState
+export default initialState;

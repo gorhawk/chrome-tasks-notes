@@ -9,7 +9,5 @@
     "default_icon": "img/ic_check_black_24dp_2x.png",
     "default_popup": "popup.html"
   },
-  "permissions": [
-    "storage"
-  ]
+  "permissions": ["storage"]
 }

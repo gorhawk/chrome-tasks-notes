@@ -1,4 +1,4 @@
-const CSS_CLASS_SEPARATOR = ' ';
+const CSS_CLASS_SEPARATOR = " ";
 
 /**
  * Creates className from attributes joined with class separator.
@@ -7,49 +7,48 @@ const CSS_CLASS_SEPARATOR = ' ';
  * @return string
  */
 export function createClassName(...classes) {
-    return classes.filter(item => item).join(CSS_CLASS_SEPARATOR);
+  return classes.filter((item) => item).join(CSS_CLASS_SEPARATOR);
 }
 
 export function clamp(number, lowerBound, upperBound) {
-    number = Math.min(number, upperBound);
-    number = Math.max(number, lowerBound);
-    return number;
+  number = Math.min(number, upperBound);
+  number = Math.max(number, lowerBound);
+  return number;
 }
 
 export function omit(object, key) {
-    const result = Object.assign({}, object)
-    if (Array.isArray(key)) {
-        key.forEach(item => {
-            delete result[item]
-        });
-    } else {
-        delete result[key]
-    }
-    return result
+  const result = Object.assign({}, object);
+  if (Array.isArray(key)) {
+    key.forEach((item) => {
+      delete result[item];
+    });
+  } else {
+    delete result[key];
+  }
+  return result;
 }
 
-export const without = (array, index) => index < 0 ? array : [
-    ...array.slice(0, index),
-    ...array.slice(index + 1),
-]
+export const without = (array, index) =>
+  index < 0 ? array : [...array.slice(0, index), ...array.slice(index + 1)];
 
 export const generateRandomKeys = (count, exceptions = []) => {
-    const keys = []
-    while (count) {
-        // get the last 6 digits of this base 36 number (fraction)
-        const randomKey = Math.random().toString(36).slice(-6);
-        if (exceptions.includes(randomKey)) {
-            continue
-        }
-        keys.push(randomKey)
-        --count
+  const keys = [];
+  while (count) {
+    // get the last 6 digits of this base 36 number (fraction)
+    const randomKey = Math.random().toString(36).slice(-6);
+    if (exceptions.includes(randomKey)) {
+      continue;
     }
-    if (keys.length === 1) {
-        return keys[0]
-    }
-    return keys
-}
+    keys.push(randomKey);
+    --count;
+  }
+  if (keys.length === 1) {
+    return keys[0];
+  }
+  return keys;
+};
 
-export const todoOccurrenceCount = (lists, todoId) => Object.keys(lists)
-    .map(key => lists[key].todoIds.includes(todoId))
-    .reduce((sum, value) => sum + value, 0)
+export const todoOccurrenceCount = (lists, todoId) =>
+  Object.keys(lists)
+    .map((key) => lists[key].todoIds.includes(todoId))
+    .reduce((sum, value) => sum + value, 0);
