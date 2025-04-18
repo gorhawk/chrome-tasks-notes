@@ -6,7 +6,7 @@
   "default_locale": "en",
   "action": {
     "default_title": "__MSG_applicationName__",
-    "default_icon": "assets/img/ic_check_black_24dp_2x.png",
+    "default_icon": "img/ic_check_black_24dp_2x.png",
     "default_popup": "popup.html"
   },
   "permissions": [

@@ -33,8 +33,9 @@ export const moveTodoInList = (id, listId, targetIndex) => (dispatch, getState) 
 
 export const addTodo = (title, listId) => (dispatch, getState) => {
     const state = getState()
-    const existingTodoIds = Object.keys(state.global.todos)
-    const key = generateRandomKeys(1, existingTodoIds)
+    const existingTodoIds = Object.keys(state.global.todos);
+    const existingTodoListIds = Object.keys(state.global.todoLists);
+    const key = generateRandomKeys(1, [...existingTodoListIds, ...existingTodoIds]);
     dispatch(addTodoWithId(key, title, listId))
     dispatch(initiateSave())
 }

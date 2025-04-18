@@ -1,5 +1,3 @@
-import RandomString from 'randomstring';
-
 const CSS_CLASS_SEPARATOR = ' ';
 
 /**
@@ -38,7 +36,8 @@ export const without = (array, index) => index < 0 ? array : [
 export const generateRandomKeys = (count, exceptions = []) => {
     const keys = []
     while (count) {
-        const randomKey = RandomString.generate(6)
+        // get the last 6 digits of this base 36 number (fraction)
+        const randomKey = Math.random().toString(36).slice(-6);
         if (exceptions.includes(randomKey)) {
             continue
         }

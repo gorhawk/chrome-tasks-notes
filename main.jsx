@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
-import logger from 'redux-logger'
+// import logger from 'redux-logger'
 import thunk from 'redux-thunk'
 import rootReducer from './src/redux/rootReducer'
 import Application from "./src/components/Application.jsx"
@@ -15,8 +15,8 @@ const init = globalState => {
     }
     const wrapper = document.getElementById('js-wrapper')
     const middleware = [thunk]
-    if (ENV_PRODUCTION) {
-        middleware.push(logger);
+    if (false) {
+        // middleware.push(logger);
     }
     const store = createStore(rootReducer, initialState, applyMiddleware(...middleware))
     const app = <Application/>
