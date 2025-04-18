@@ -31,11 +31,13 @@ export function omit(object, key) {
 export const without = (array, index) =>
   index < 0 ? array : [...array.slice(0, index), ...array.slice(index + 1)];
 
+// get the last 6 digits of this base 36 number (fraction)
+export const generateRandomKey = () => Math.random().toString(36).slice(-6);
+
 export const generateRandomKeys = (count, exceptions = []) => {
   const keys = [];
   while (count) {
-    // get the last 6 digits of this base 36 number (fraction)
-    const randomKey = Math.random().toString(36).slice(-6);
+    const randomKey = generateRandomKey();
     if (exceptions.includes(randomKey)) {
       continue;
     }

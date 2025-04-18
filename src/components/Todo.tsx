@@ -2,7 +2,7 @@ import "./Todo.scss";
 import React from "react";
 import { connect } from "react-redux";
 import { createClassName } from "../../utility.js";
-import Checkmark from "./Checkmark.jsx";
+import Checkmark from "./Checkmark.js";
 import { toggleTodo, removeTodo, changeTodo } from "../redux/actions.js";
 import TodoTitleEditor from "./TodoTitleEditor.jsx";
 
@@ -115,4 +115,4 @@ const mapDispatchToProps = (dispatch) => ({
   onRemoveTodoClick: (id, listId) => dispatch(removeTodo(id, listId)),
 });
 
-export default Todo = connect(null, mapDispatchToProps)(Todo);
+export default connect(null, mapDispatchToProps)(Todo);

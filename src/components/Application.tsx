@@ -3,12 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import Todo from "./Todo.jsx";
 import TodoInput from "./TodoInput.jsx";
-import {
-  toggleTodo,
-  removeTodo,
-  moveTodoInList,
-  clearCompletedTodos,
-} from "../redux/actions";
+import { moveTodoInList, clearCompletedTodos } from "../redux/actions.js";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 class Application extends React.Component {
@@ -124,7 +119,4 @@ const mapDispatchToProps = (dispatch) => ({
   clearCompleted: (listId) => dispatch(clearCompletedTodos(listId)),
 });
 
-export default Application = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Application);
+export default connect(mapStateToProps, mapDispatchToProps)(Application);

@@ -43,7 +43,4 @@ const mapDispatchToProps = (dispatch) => ({
   onSubmission: (title, listId) => dispatch(addTodo(title, listId)),
 });
 
-export default TodoInput = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(TodoInput);
+export default connect(mapStateToProps, mapDispatchToProps)(TodoInput);

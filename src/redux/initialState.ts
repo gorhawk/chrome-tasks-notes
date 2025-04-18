@@ -1,6 +1,6 @@
-import { generateRandomKeys } from "../../utility.js";
+import { generateRandomKey } from "../../utility.js";
 
-const initialTodoListId = generateRandomKeys(1);
+const initialTodoListId = generateRandomKey();
 
 const initialState = {
   todos: {},
