@@ -1,4 +1,4 @@
-import "./TodoInput.scss";
+import "./TodoInput.css";
 import React from "react";
 import { connect } from "react-redux";
 import { addTodo } from "../redux/actions.js";

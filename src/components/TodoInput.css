@@ -14,13 +14,13 @@
   padding: 8px;
   border-style: solid;
   border-width: 1px;
+}
 
-  &:focus {
-    outline: 1px solid rgba(43, 135, 255, 0.34);
-  }
+.todo-input:focus {
+  outline: 1px solid rgba(43, 135, 255, 0.34);
+}
 
-  &::placeholder {
-    color: #d4d4d4;
-    user-select: none;
-  }
+.todo-input::placeholder {
+  color: #d4d4d4;
+  user-select: none;
 }

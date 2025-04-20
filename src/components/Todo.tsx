@@ -1,4 +1,4 @@
-import "./Todo.scss";
+import "./Todo.css";
 import React from "react";
 import { connect } from "react-redux";
 import { createClassName } from "../../utility.js";
