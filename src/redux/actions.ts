@@ -1,5 +1,5 @@
 import { generateRandomKeys } from "../../utility.js";
-import { saveState, syncLocalStorage } from "../storage.js";
+import { saveState, syncLocalStorage } from "../storage/storage";
 
 export const TOGGLE_TODO = "TOGGLE_TODO";
 export const ADD_TODO = "ADD_TODO";

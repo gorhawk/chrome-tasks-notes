@@ -123,8 +123,8 @@ body {
   transition: 0.3s;
   opacity: 25%;
   position: fixed;
-  left: 0;
-  top: 0;
+  left: 5px;
+  top: 5px;
 }
 
 .clear-completed-button:hover {

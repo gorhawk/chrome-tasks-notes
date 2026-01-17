@@ -1,9 +1,19 @@
-import { largeSync } from "./lib/largeSync";
+import { largeSync } from "../lib/largeSync";
 
 largeSync && console.debug("largeSync module loaded");
 
 const STORAGE_KEY = "tasks_notes_tab";
 const STORAGE_KEY_OLD_LARGESYNC = "simpleTaskManagerData";
+
+const QUOTA = chrome.storage.sync.QUOTA_BYTES_PER_ITEM;
+const QUOTA_MARGIN = 8;
+
+function saveString(key: string, data: string) {
+  const encoder = new TextEncoder();
+  const bytes = encoder.encode(key.concat(data));
+  if (bytes.length + QUOTA_MARGIN > QUOTA) {
+  }
+}
 
 export const saveState = (state) => {
   chrome.storage.local.set({ [STORAGE_KEY]: state }, () => {
@@ -18,12 +28,12 @@ export const saveState = (state) => {
 
 const loadLargeSyncState = () =>
   new Promise((resolve, reject) => {
-    chrome.storage.largeSync.get(null, (data) => {
+    (chrome.storage as any).largeSync.get(null, (data) => {
       try {
         if (data && Object.keys(data).length > 0) {
           console.log("salvaged old data from sync with LargeSync", data);
           resolve(data[STORAGE_KEY_OLD_LARGESYNC]);
-          chrome.storage.largeSync.clear(() => {
+          (chrome.storage as any).largeSync.clear(() => {
             console.debug("cleared old data from LargeSync", data);
           });
           return;
@@ -73,7 +83,7 @@ export const loadState = async (callback) => {
   }
 };
 
-export const syncLocalStorage = (callback) => {
+export const syncLocalStorage = (callback?: Function) => {
   chrome.storage.local.get(null, (items) => {
     console.log("saving FROM local storage", items);
     chrome.storage.sync.set(items, () => {
