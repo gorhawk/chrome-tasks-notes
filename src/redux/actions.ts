@@ -1,5 +1,7 @@
 import { generateRandomKeys } from "../../utility.js";
 import { saveState, syncLocalStorage } from "../storage/storage";
+import { MAX_TASK_COUNT } from "../storage/quotas";
+import { setTaskSyncErrors } from "./ui/actions";
 
 export const TOGGLE_TODO = "TOGGLE_TODO";
 export const ADD_TODO = "ADD_TODO";
@@ -57,6 +59,12 @@ export const moveTodoInList =
 export const addTodo = (title, listId) => (dispatch, getState) => {
   const state = getState();
   const existingTodoIds = Object.keys(state.global.todos);
+  if (existingTodoIds.length >= MAX_TASK_COUNT) {
+    console.warn(
+      `task limit reached (${MAX_TASK_COUNT}) - not adding another task`,
+    );
+    return;
+  }
   const existingTodoListIds = Object.keys(state.global.todoLists);
   const key = generateRandomKeys(1, [
     ...existingTodoListIds,
@@ -79,5 +87,7 @@ export const clearCompletedTodos = (listId) => (dispatch, getState) => {
 export const initiateSave = () => (dispatch, getState) => {
   const state = getState();
   saveState(state.global);
-  syncLocalStorage();
+  syncLocalStorage(({ failedTaskIds }) => {
+    dispatch(setTaskSyncErrors(failedTaskIds));
+  });
 };

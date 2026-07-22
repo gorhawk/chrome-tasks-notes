@@ -1,4 +1,5 @@
 import React from "react";
+import { TASK_TEXT_WARNING_LENGTH } from "../storage/quotas";
 
 class TodoTitleEditor extends React.Component {
   constructor(props) {
@@ -24,19 +25,32 @@ class TodoTitleEditor extends React.Component {
     this.inputRef.current.focus();
   }
 
-  render = () => (
-    <input
-      ref={this.inputRef}
-      className="todo-title-editor"
-      type="text"
-      style={{ width: this.state.initialWidth }}
-      value={this.state.value}
-      onChange={this.handleChange}
-      onKeyDown={this.handleKeyDown}
-      onBlur={this.props.onCancelEditing}
-      onClick={(e) => e.stopPropagation()}
-    />
-  );
+  render = () => {
+    const isNearTextLimit = this.state.value.length > TASK_TEXT_WARNING_LENGTH;
+    return (
+      <span className="todo-title-editor-wrapper">
+        <input
+          ref={this.inputRef}
+          className={
+            "todo-title-editor" +
+            (isNearTextLimit ? " todo-title-editor-near-limit" : "")
+          }
+          type="text"
+          style={{ width: this.state.initialWidth }}
+          value={this.state.value}
+          onChange={this.handleChange}
+          onKeyDown={this.handleKeyDown}
+          onBlur={this.props.onCancelEditing}
+          onClick={(e) => e.stopPropagation()}
+        />
+        {isNearTextLimit && (
+          <span className="todo-title-editor-warning">
+            close to the sync size limit
+          </span>
+        )}
+      </span>
+    );
+  };
 }
 
 export default TodoTitleEditor;

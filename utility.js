@@ -31,8 +31,11 @@ export function omit(object, key) {
 export const without = (array, index) =>
   index < 0 ? array : [...array.slice(0, index), ...array.slice(index + 1)];
 
-// get the last 6 digits of this base 36 number (fraction)
-export const generateRandomKey = () => Math.random().toString(36).slice(-6);
+// 64 bits of crypto-grade randomness, base36-encoded as two fixed-width halves.
+export const generateRandomKey = () => {
+  const [hi, lo] = crypto.getRandomValues(new Uint32Array(2));
+  return hi.toString(36).padStart(7, "0") + lo.toString(36).padStart(7, "0");
+};
 
 export const generateRandomKeys = (count, exceptions = []) => {
   const keys = [];

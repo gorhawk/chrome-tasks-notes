@@ -69,6 +69,24 @@ li:last-child .todo-item {
   outline: 2px dashed #9eb7ef;
 }
 
+.todo-item .todo-title-editor-near-limit {
+  outline-color: #d98c00;
+}
+
+.todo-item .todo-title-editor-warning {
+  display: block;
+  font-size: 11px;
+  color: #d98c00;
+  margin-left: 3px;
+}
+
+.todo-item .todo-sync-error {
+  flex: 0 0 auto;
+  color: #d98c00;
+  padding: 0 4px;
+  cursor: help;
+}
+
 .todo-item .delete-button {
   box-sizing: border-box;
   text-align: right;

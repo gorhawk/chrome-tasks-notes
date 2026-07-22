@@ -100,6 +100,14 @@ class Todo extends React.Component {
         <Checkmark />
       </div>
       <div className="todo-title-flex-wrapper">{this.renderTitle()}</div>
+      {this.props.hasSyncError && (
+        <div
+          className="todo-sync-error"
+          title="This task's text is too long to sync across your devices. Shorten it to sync."
+        >
+          &#9888;
+        </div>
+      )}
       <div className="delete-button" onClick={this.onDeleteButtonClick}>
         <div>&times;</div>
       </div>
@@ -107,7 +115,9 @@ class Todo extends React.Component {
   );
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state, ownProps) => ({
+  hasSyncError: (state.ui.taskSyncErrorIds || []).includes(ownProps.id),
+});
 
 const mapDispatchToProps = (dispatch) => ({
   onFinishEditing: (id, newProps) => dispatch(changeTodo(id, newProps)),
@@ -115,4 +125,4 @@ const mapDispatchToProps = (dispatch) => ({
   onRemoveTodoClick: (id, listId) => dispatch(removeTodo(id, listId)),
 });
 
-export default connect(null, mapDispatchToProps)(Todo);
+export default connect(mapStateToProps, mapDispatchToProps)(Todo);
