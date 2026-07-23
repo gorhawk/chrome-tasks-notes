@@ -34,12 +34,12 @@ const TodoTitleEditor = ({
   const isNearTextLimit = value.length > TASK_TEXT_WARNING_LENGTH;
 
   return (
-    <span className="todo-title-editor-wrapper">
+    <span className="inline-block">
       <input
         ref={inputRef}
         className={
-          "todo-title-editor" +
-          (isNearTextLimit ? " todo-title-editor-near-limit" : "")
+          "mx-1 inline-block border-0 px-1.5 py-0.5 outline-2 outline-dashed outline-blue-300" +
+          (isNearTextLimit ? " outline-amber-600" : "")
         }
         type="text"
         style={{ width: initialWidth ?? undefined }}
@@ -50,7 +50,7 @@ const TodoTitleEditor = ({
         onClick={(e) => e.stopPropagation()}
       />
       {isNearTextLimit && (
-        <span className="todo-title-editor-warning">
+        <span className="ml-1 block text-xs text-amber-600">
           close to the sync size limit
         </span>
       )}

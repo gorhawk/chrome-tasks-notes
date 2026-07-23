@@ -1,4 +1,3 @@
-import "./Todo.css";
 import React, { useRef, useState } from "react";
 import { createClassName } from "../../utility.js";
 import Checkmark from "./Checkmark";
@@ -56,9 +55,8 @@ const Todo = ({ id, title, isCompleted, listId }: TodoProps) => {
   const onCancelEditing = () => stopEditing();
 
   const className = createClassName(
-    "todo-item",
-    isCompleted && "checked",
-    isEditing && "editing",
+    "relative flex items-center p-2.5 select-none transition-colors duration-500 hover:bg-neutral-50",
+    isEditing ? "cursor-auto" : "cursor-pointer",
   );
 
   const renderTitle = () => {
@@ -75,7 +73,7 @@ const Todo = ({ id, title, isCompleted, listId }: TodoProps) => {
     return (
       <span
         ref={titleDisplayRef}
-        className="todo-title"
+        className="mx-1 inline-block cursor-text border-0 px-1.5 py-0.5 hover:inset-ring-2 hover:inset-ring-neutral-400/20 focus:shadow-md"
         onClick={onTodoTitleClick}
       >
         {title}
@@ -85,19 +83,22 @@ const Todo = ({ id, title, isCompleted, listId }: TodoProps) => {
 
   return (
     <div className={className} onClick={onTodoClick}>
-      <div className="checkmark">
-        <Checkmark />
+      <div className="relative mr-2.5 size-6 flex-none border-2 border-neutral-400 bg-neutral-200/50">
+        <Checkmark visible={isCompleted} />
       </div>
-      <div className="todo-title-flex-wrapper">{renderTitle()}</div>
+      <div className="flex-auto">{renderTitle()}</div>
       {hasSyncError && (
         <div
-          className="todo-sync-error"
+          className="flex-none cursor-help px-1 text-amber-600"
           title="This task's text is too long to sync across your devices. Shorten it to sync."
         >
           &#9888;
         </div>
       )}
-      <div className="delete-button" onClick={onDeleteButtonClick}>
+      <div
+        className="flex flex-none items-center justify-end pr-2.5 opacity-25 transition duration-500 hover:opacity-85"
+        onClick={onDeleteButtonClick}
+      >
         <div>&times;</div>
       </div>
     </div>

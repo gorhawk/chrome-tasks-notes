@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: OpenSansLightInternal;
+  src: url("/assets/fonts/OpenSans-Light.ttf") format("truetype");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: RobotoThinInternal;
+  src: url("/assets/fonts/Roboto-Thin.ttf") format("truetype");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: RobotoVarInternal;
+  src: url("/assets/fonts/roboto_variable_wi_we.ttf") format("truetype");
+  font-weight: normal;
+}
+
+@theme {
+  --font-sans:
+    RobotoThinInternal, "Segoe UI Light", OpenSansLightInternal,
+    "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
+}

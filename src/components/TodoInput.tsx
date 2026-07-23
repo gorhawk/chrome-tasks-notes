@@ -1,4 +1,3 @@
-import "./TodoInput.css";
 import React, { useState } from "react";
 import { addTodoThunk } from "../redux/todosSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
@@ -32,11 +31,12 @@ const TodoInput = ({ listId }: TodoInputProps) => {
   };
 
   return (
-    <div className="todo-input-wrapper">
+    <div className="my-5 flex w-full flex-none flex-col shadow-md">
       <input
         type="text"
         className={
-          "todo-input" + (isNearTextLimit ? " todo-input-near-limit" : "")
+          "h-10 flex-1 border-2 border-solid p-2 placeholder:text-neutral-300 focus:outline-2 focus:outline-blue-500/30" +
+          (isNearTextLimit ? " border-amber-600" : " border-neutral-300")
         }
         placeholder="Add a task"
         value={value}
@@ -45,13 +45,13 @@ const TodoInput = ({ listId }: TodoInputProps) => {
         disabled={atTaskLimit}
       />
       {atTaskLimit && (
-        <div className="todo-input-warning">
+        <div className="px-2 py-1 text-xs text-amber-600">
           Task limit reached ({MAX_TASK_COUNT}) - delete a task to add
           another.
         </div>
       )}
       {!atTaskLimit && isNearTextLimit && (
-        <div className="todo-input-warning">
+        <div className="px-2 py-1 text-xs text-amber-600">
           This task is close to the sync size limit and may not save.
         </div>
       )}

@@ -1,4 +1,3 @@
-import "./Application.css";
 import React from "react";
 import Todo from "./Todo";
 import TodoInput from "./TodoInput";
@@ -38,9 +37,8 @@ const Application = () => {
     return (
       <Draggable draggableId={todo.id} key={todo.id} index={index}>
         {(provided) => (
-          <div className="todo-placeholder-wrapper">
+          <div className="border-b-2 border-neutral-100">
             <div
-              className="todo-draggable-wrapper"
               ref={provided.innerRef}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
@@ -55,13 +53,16 @@ const Application = () => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="todo-list-wrapper">
-        <div className="todo-list-top-spacer" />
+      <div className="flex min-w-3xl max-w-[90%] flex-col items-center">
+        <div className="h-[10vh] w-full" />
         <TodoInput listId={activeListId} />
-        <div className="todo-list-scroll-container">
+        <div className="flex w-full flex-1 flex-col">
           <Droppable droppableId={activeListId} type="TODO">
             {(provided) => (
-              <div ref={provided.innerRef} className="todo-list">
+              <div
+                ref={provided.innerRef}
+                className="w-full flex-1 list-none"
+              >
                 {activeListElements}
                 {provided.placeholder}
               </div>
@@ -70,7 +71,7 @@ const Application = () => {
         </div>
       </div>
       <button
-        className="button clear-completed-button"
+        className="fixed top-1 left-1 inline-block cursor-pointer border-0 bg-transparent px-7 py-3.5 opacity-25 transition duration-300 hover:bg-neutral-100 hover:opacity-100"
         onClick={() => dispatch(clearCompletedTodos(activeListId))}
       >
         Clear completed
