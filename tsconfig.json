@@ -13,5 +13,5 @@
     "noEmit": true,
     "types": ["chrome"]
   },
-  "include": ["src", "utility.js"]
+  "include": ["src", "utility.js", "main.tsx"]
 }

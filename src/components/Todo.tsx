@@ -1,106 +1,95 @@
 import "./Todo.css";
-import React from "react";
-import { connect } from "react-redux";
+import React, { useRef, useState } from "react";
 import { createClassName } from "../../utility.js";
-import Checkmark from "./Checkmark.js";
-import { toggleTodo, removeTodo, changeTodo } from "../redux/actions.js";
-import TodoTitleEditor from "./TodoTitleEditor.jsx";
+import Checkmark from "./Checkmark";
+import { toggleTodo, removeTodo, changeTodo } from "../redux/todosSlice";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import TodoTitleEditor from "./TodoTitleEditor";
 
-class Todo extends React.Component {
-  constructor(props) {
-    super(props);
-    this.titleDisplayRef = React.createRef();
-    this.state = {
-      isEditing: false,
-      titleWidth: null,
-    };
-  }
+interface TodoProps {
+  id: string;
+  title: string;
+  isCompleted: boolean;
+  listId: string;
+}
 
-  onDeleteButtonClick = (event) => {
+const Todo = ({ id, title, isCompleted, listId }: TodoProps) => {
+  const dispatch = useAppDispatch();
+  const hasSyncError = useAppSelector((state) =>
+    (state.ui.taskSyncErrorIds || []).includes(id),
+  );
+  const titleDisplayRef = useRef<HTMLSpanElement>(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [titleWidth, setTitleWidth] = useState<number | null>(null);
+
+  const startEditing = () => {
+    if (isEditing) {
+      return;
+    }
+    setTitleWidth(titleDisplayRef.current ? titleDisplayRef.current.offsetWidth : null);
+    setIsEditing(true);
+  };
+
+  const stopEditing = () => setIsEditing(false);
+
+  const onDeleteButtonClick = (event: React.MouseEvent) => {
     event.preventDefault();
     event.stopPropagation();
-    this.props.onRemoveTodoClick(this.props.id, this.props.listId);
+    dispatch(removeTodo({ id, listId }));
   };
 
-  onTodoTitleClick = (event) => {
+  const onTodoTitleClick = (event: React.MouseEvent) => {
     event.preventDefault();
     event.stopPropagation();
-    this.startEditing();
+    startEditing();
   };
 
-  startEditing = () => {
-    this.setState((prevState) =>
-      prevState.isEditing
-        ? {}
-        : {
-            isEditing: true,
-            titleWidth: this.titleDisplayRef.current
-              ? this.titleDisplayRef.current.offsetWidth
-              : null,
-          },
-    );
+  const onTodoClick = () => {
+    dispatch(toggleTodo(id));
   };
 
-  stopEditing = () => {
-    this.setState({ isEditing: false });
+  const onFinishEditing = ({ value }: { value: string }) => {
+    stopEditing();
+    dispatch(changeTodo({ id, newProps: { title: value } }));
   };
 
-  onTodoClick = (e) => {
-    this.props.onTodoClick(this.props.id);
-  };
+  const onCancelEditing = () => stopEditing();
 
-  onFinishEditing = ({ value }) => {
-    this.stopEditing();
-    this.props.onFinishEditing(this.props.id, {
-      title: value,
-    });
-  };
+  const className = createClassName(
+    "todo-item",
+    isCompleted && "checked",
+    isEditing && "editing",
+  );
 
-  onCancelEditing = () => {
-    this.stopEditing();
-  };
-
-  className = () =>
-    createClassName(
-      "todo-item",
-      this.props.isCompleted && "checked",
-      this.state.isEditing && "editing",
-    );
-
-  renderTitle = () => {
-    if (this.state.isEditing) {
+  const renderTitle = () => {
+    if (isEditing) {
       return (
         <TodoTitleEditor
-          value={this.props.title}
-          initialWidth={this.state.titleWidth}
-          onFinishEditing={this.onFinishEditing}
-          onCancelEditing={this.onCancelEditing}
+          value={title}
+          initialWidth={titleWidth}
+          onFinishEditing={onFinishEditing}
+          onCancelEditing={onCancelEditing}
         />
       );
-    } else {
-      return (
-        <span
-          ref={this.titleDisplayRef}
-          className="todo-title"
-          onClick={this.onTodoTitleClick}
-        >
-          {this.props.title}
-        </span>
-      );
     }
+    return (
+      <span
+        ref={titleDisplayRef}
+        className="todo-title"
+        onClick={onTodoTitleClick}
+      >
+        {title}
+      </span>
+    );
   };
 
-  render = () => (
-    <div
-      className={this.className()}
-      onClick={this.onTodoClick}
-      onBlur={this.cancelEditing}
-    >
+  return (
+    <div className={className} onClick={onTodoClick}>
       <div className="checkmark">
         <Checkmark />
       </div>
-      <div className="todo-title-flex-wrapper">{this.renderTitle()}</div>
-      {this.props.hasSyncError && (
+      <div className="todo-title-flex-wrapper">{renderTitle()}</div>
+      {hasSyncError && (
         <div
           className="todo-sync-error"
           title="This task's text is too long to sync across your devices. Shorten it to sync."
@@ -108,21 +97,11 @@ class Todo extends React.Component {
           &#9888;
         </div>
       )}
-      <div className="delete-button" onClick={this.onDeleteButtonClick}>
+      <div className="delete-button" onClick={onDeleteButtonClick}>
         <div>&times;</div>
       </div>
     </div>
   );
-}
+};
 
-const mapStateToProps = (state, ownProps) => ({
-  hasSyncError: (state.ui.taskSyncErrorIds || []).includes(ownProps.id),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onFinishEditing: (id, newProps) => dispatch(changeTodo(id, newProps)),
-  onTodoClick: (id) => dispatch(toggleTodo(id)),
-  onRemoveTodoClick: (id, listId) => dispatch(removeTodo(id, listId)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Todo);
+export default Todo;

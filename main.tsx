@@ -1,31 +1,21 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
-import { createStore, applyMiddleware } from "redux";
-// import logger from 'redux-logger'
-import thunk from "redux-thunk";
-import rootReducer from "./src/redux/rootReducer.js";
-import Application from "./src/components/Application.jsx";
+import { makeStore } from "./src/redux/store";
+import Application from "./src/components/Application";
 import { loadState } from "./src/storage/storage";
+import type { GlobalState } from "./src/redux/types";
 
-const init = (globalState) => {
+const init = (globalState: GlobalState | undefined) => {
   console.log(globalState);
-  const initialState = {
-    global: globalState,
-  };
   const wrapper = document.getElementById("js-wrapper");
-  const middleware = [thunk];
-  if (false) {
-    // middleware.push(logger);
-  }
-  const store = createStore(
-    rootReducer,
-    initialState,
-    applyMiddleware(...middleware),
+  const store = makeStore(globalState ? { global: globalState } : undefined);
+  const root = createRoot(wrapper!);
+  root.render(
+    <Provider store={store}>
+      <Application />
+    </Provider>,
   );
-  const app = <Application />;
-  const provider = <Provider store={store}>{app}</Provider>;
-  ReactDOM.render(provider, wrapper);
 };
 
 loadState(init);
