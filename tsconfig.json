@@ -13,5 +13,9 @@
     "noEmit": true,
     "types": ["chrome"]
   },
-  "include": ["src", "utility.js", "main.tsx"]
+  "include": ["src", "utility.js", "main.tsx"],
+  // Tests are typechecked separately (tsconfig.vitest.json) -- they use the
+  // automatic JSX runtime and jest-dom matcher types, so keeping them out of the
+  // app typecheck leaves `npm run typecheck` scoped to shipped code.
+  "exclude": ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx"]
 }

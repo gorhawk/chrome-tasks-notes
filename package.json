@@ -7,7 +7,9 @@
     "doc": "doc"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:types": "tsc --noEmit -p tsconfig.vitest.json",
     "typecheck": "tsc --noEmit",
     "build": "vite build",
     "pack": "npm run build && ./deployment/pack.sh"
@@ -30,14 +32,20 @@
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.3",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^7.0.0",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
     "@types/chrome": "^0.0.320",
     "@types/react": "^18.3.20",
     "@types/react-dom": "^18.3.5",
+    "jsdom": "^29.1.1",
     "prettier": "3.x",
     "qunit": "^2.24.1",
     "sass-embedded": "^1.86.3",
     "tailwindcss": "^4.3.3",
     "typescript": "^5.8.3",
-    "vite": "^6.2.5"
+    "vite": "^6.2.5",
+    "vitest": "^4.1.10"
   }
 }

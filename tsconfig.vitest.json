@@ -1,0 +1,11 @@
+{
+  // Typecheck config for the test tree only. Run via `npm run test:types`.
+  // Differs from the app config in two ways: the automatic JSX runtime (so test
+  // files don't import React) and the jest-dom + vitest ambient types.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "types": ["chrome", "vitest/globals", "@testing-library/jest-dom"]
+  },
+  "include": ["test", "src/**/*.test.ts", "src/**/*.test.tsx"]
+}
