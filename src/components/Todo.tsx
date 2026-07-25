@@ -69,7 +69,7 @@ const Todo = ({ id, title, isCompleted, listId }: TodoProps) => {
     return (
       <span
         title={title}
-        className="mx-1 block max-w-full truncate cursor-text border-0 px-1.5 py-0.5 hover:inset-ring-2 hover:inset-ring-neutral-400/20 focus:shadow-md"
+        className="mx-1 inline-block max-w-full truncate cursor-text border-0 px-1.5 py-0.5 hover:inset-ring-2 hover:inset-ring-neutral-400/20 focus:shadow-md"
         onClick={onTodoTitleClick}
       >
         {title}
@@ -82,7 +82,7 @@ const Todo = ({ id, title, isCompleted, listId }: TodoProps) => {
       <div className="flex size-6 flex-none items-center justify-center border-2 border-neutral-400 bg-neutral-200/50">
         <Checkmark visible={isCompleted} />
       </div>
-      <div className="min-w-0 flex-auto">{renderTitle()}</div>
+      <div className="flex min-w-0 flex-auto">{renderTitle()}</div>
       {hasSyncError && (
         <div
           className="flex-none cursor-help px-1 text-amber-600"
