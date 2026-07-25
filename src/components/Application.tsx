@@ -98,7 +98,8 @@ const Application = () => {
           Clear completed
         </button>
       </div>
-      <div className="flex w-full flex-1 flex-col items-center justify-center">
+      <div className="flex w-full flex-1 flex-col items-center">
+        <div className="grow" />
         <div className="flex min-w-[50%] max-w-[80%] flex-col items-center">
           <TodoInput listId={activeListId} />
           <div className="flex w-full flex-1 flex-col">
@@ -115,6 +116,7 @@ const Application = () => {
             </Droppable>
           </div>
         </div>
+        <div className="grow-2" />
       </div>
     </DragDropContext>
   );
