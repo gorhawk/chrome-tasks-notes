@@ -66,6 +66,56 @@ describe("Application", () => {
     expect(store.getState().global.todos.t1).toBeUndefined();
   });
 
+  it("commits a new title when editing and pressing Enter", async () => {
+    const { user, store } = renderWithStore(<Application />, {
+      preloadedState: {
+        global: makeGlobalState([{ id: "t1", title: "Buy milk" }]),
+      },
+    });
+
+    await user.click(screen.getByText("Buy milk"));
+    const input = screen.getByDisplayValue("Buy milk");
+    await user.clear(input);
+    await user.type(input, "Buy oat milk{Enter}");
+
+    expect(screen.getByText("Buy oat milk")).toBeInTheDocument();
+    expect(store.getState().global.todos.t1.title).toBe("Buy oat milk");
+  });
+
+  it("discards edits and keeps the original title when Escape is pressed", async () => {
+    const { user, store } = renderWithStore(<Application />, {
+      preloadedState: {
+        global: makeGlobalState([{ id: "t1", title: "Buy milk" }]),
+      },
+    });
+
+    await user.click(screen.getByText("Buy milk"));
+    const input = screen.getByDisplayValue("Buy milk");
+    await user.clear(input);
+    await user.type(input, "Ignore me{Escape}");
+
+    expect(screen.getByText("Buy milk")).toBeInTheDocument();
+    expect(screen.queryByText("Ignore me")).not.toBeInTheDocument();
+    expect(store.getState().global.todos.t1.title).toBe("Buy milk");
+  });
+
+  it("commits edits when the input is blurred", async () => {
+    const { user, store } = renderWithStore(<Application />, {
+      preloadedState: {
+        global: makeGlobalState([{ id: "t1", title: "Buy milk" }]),
+      },
+    });
+
+    await user.click(screen.getByText("Buy milk"));
+    const input = screen.getByDisplayValue("Buy milk");
+    await user.clear(input);
+    await user.type(input, "Buy oat milk");
+    await user.tab();
+
+    expect(screen.getByText("Buy oat milk")).toBeInTheDocument();
+    expect(store.getState().global.todos.t1.title).toBe("Buy oat milk");
+  });
+
   it("clears completed tasks with the Clear completed button", async () => {
     const { user, store } = renderWithStore(<Application />, {
       preloadedState: {

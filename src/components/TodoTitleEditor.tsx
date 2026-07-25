@@ -3,14 +3,12 @@ import { TASK_TEXT_WARNING_LENGTH } from "../storage/quotas";
 
 interface TodoTitleEditorProps {
   value: string;
-  initialWidth: number | null;
   onFinishEditing: (result: { value: string }) => void;
   onCancelEditing: () => void;
 }
 
 const TodoTitleEditor = ({
   value: initialValue,
-  initialWidth,
   onFinishEditing,
   onCancelEditing,
 }: TodoTitleEditorProps) => {
@@ -19,11 +17,16 @@ const TodoTitleEditor = ({
 
   useEffect(() => {
     inputRef.current?.focus();
+    inputRef.current?.select();
   }, []);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
+      e.preventDefault();
       onFinishEditing({ value });
+    } else if (e.key === "Escape") {
+      e.preventDefault();
+      onCancelEditing();
     }
   };
 
@@ -38,15 +41,14 @@ const TodoTitleEditor = ({
       <input
         ref={inputRef}
         className={
-          "mx-1 inline-block border-0 px-1.5 py-0.5 outline-2 outline-dashed outline-blue-300" +
+          "mx-1 min-w-16 max-w-full field-sizing-content border-0 px-1.5 py-0.5 outline-2 outline-blue-500/30" +
           (isNearTextLimit ? " outline-amber-600" : "")
         }
         type="text"
-        style={{ width: initialWidth ?? undefined }}
         value={value}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
-        onBlur={onCancelEditing}
+        onBlur={() => onFinishEditing({ value })}
         onClick={(e) => e.stopPropagation()}
       />
       {isNearTextLimit && (

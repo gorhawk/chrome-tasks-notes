@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { createClassName } from "../../utility.js";
 import Checkmark from "./Checkmark";
 import { toggleTodo, removeTodo, changeTodo } from "../redux/todosSlice";
@@ -17,15 +17,12 @@ const Todo = ({ id, title, isCompleted, listId }: TodoProps) => {
   const hasSyncError = useAppSelector((state) =>
     (state.ui.taskSyncErrorIds || []).includes(id),
   );
-  const titleDisplayRef = useRef<HTMLSpanElement>(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [titleWidth, setTitleWidth] = useState<number | null>(null);
 
   const startEditing = () => {
     if (isEditing) {
       return;
     }
-    setTitleWidth(titleDisplayRef.current ? titleDisplayRef.current.offsetWidth : null);
     setIsEditing(true);
   };
 
@@ -64,7 +61,6 @@ const Todo = ({ id, title, isCompleted, listId }: TodoProps) => {
       return (
         <TodoTitleEditor
           value={title}
-          initialWidth={titleWidth}
           onFinishEditing={onFinishEditing}
           onCancelEditing={onCancelEditing}
         />
@@ -72,7 +68,6 @@ const Todo = ({ id, title, isCompleted, listId }: TodoProps) => {
     }
     return (
       <span
-        ref={titleDisplayRef}
         title={title}
         className="mx-1 block max-w-full truncate cursor-text border-0 px-1.5 py-0.5 hover:inset-ring-2 hover:inset-ring-neutral-400/20 focus:shadow-md"
         onClick={onTodoTitleClick}
