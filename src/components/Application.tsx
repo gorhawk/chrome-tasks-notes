@@ -80,20 +80,7 @@ const Application = () => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="flex min-w-[50%] max-w-[80%] flex-col items-center">
-        <TodoInput listId={activeListId} />
-        <div className="flex w-full flex-1 flex-col">
-          <Droppable droppableId={activeListId} type="TODO">
-            {(provided) => (
-              <div ref={provided.innerRef} className="w-full flex-1 list-none">
-                {activeListElements}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        </div>
-      </div>
-      <div className="fixed top-1 left-1 flex items-center">
+      <div className="flex w-full items-center">
         <button
           type="button"
           className="inline-block cursor-pointer border-0 bg-transparent px-7 py-3.5 opacity-25 transition duration-300 disabled:cursor-default disabled:opacity-10 disabled:hover:bg-transparent hover:bg-neutral-100 hover:opacity-100"
@@ -110,6 +97,24 @@ const Application = () => {
         >
           Clear completed
         </button>
+      </div>
+      <div className="flex w-full flex-1 flex-col items-center justify-center">
+        <div className="flex min-w-[50%] max-w-[80%] flex-col items-center">
+          <TodoInput listId={activeListId} />
+          <div className="flex w-full flex-1 flex-col">
+            <Droppable droppableId={activeListId} type="TODO">
+              {(provided) => (
+                <div
+                  ref={provided.innerRef}
+                  className="w-full flex-1 list-none"
+                >
+                  {activeListElements}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </div>
+        </div>
       </div>
     </DragDropContext>
   );
