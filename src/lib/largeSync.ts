@@ -1,3 +1,6 @@
+// @ts-nocheck -- vendored third-party code (largeSync + LZString), kept verbatim;
+// not typechecked. Edit upstream, not here.
+//
 // https://github.com/dtuit/chrome-storage-largeSync
 //
 // The MIT License (MIT)
