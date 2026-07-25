@@ -53,16 +53,12 @@ const Application = () => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="flex min-w-3xl max-w-[90%] flex-col items-center">
-        <div className="h-[10vh] w-full" />
+      <div className="flex min-w-[50%] max-w-[80%] flex-col items-center">
         <TodoInput listId={activeListId} />
         <div className="flex w-full flex-1 flex-col">
           <Droppable droppableId={activeListId} type="TODO">
             {(provided) => (
-              <div
-                ref={provided.innerRef}
-                className="w-full flex-1 list-none"
-              >
+              <div ref={provided.innerRef} className="w-full flex-1 list-none">
                 {activeListElements}
                 {provided.placeholder}
               </div>
