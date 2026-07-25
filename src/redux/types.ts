@@ -17,6 +17,6 @@ export interface GlobalState {
 }
 
 export interface UiState {
-  todoInEdit: { id: string; title: string } | null;
   taskSyncErrorIds: string[];
+  history: GlobalState[];
 }

@@ -5,6 +5,7 @@ import {
   todoOccurrenceCount,
 } from "../../utility.js";
 import { MAX_TASK_COUNT } from "../storage/quotas";
+import { popHistory } from "./ui/uiSlice";
 import type { GlobalState } from "./types";
 import type { AppThunk } from "./store";
 
@@ -81,6 +82,12 @@ const todosSlice = createSlice({
       const { id, newProps } = action.payload;
       state.todos[id] = { ...state.todos[id], id, ...newProps };
     },
+    // Wholesale-replaces the slice with a snapshot from the undo history (see
+    // uiSlice's `history`). Deliberately not in listenerMiddleware's history-push
+    // matcher, so undoing doesn't push a new entry onto the stack it's popping from.
+    restoreGlobalState(_state, action: PayloadAction<GlobalState>) {
+      return action.payload;
+    },
   },
 });
 
@@ -91,6 +98,7 @@ export const {
   moveTodoInList,
   addTodo,
   changeTodo,
+  restoreGlobalState,
 } = todosSlice.actions;
 
 export const addTodoThunk =
@@ -111,5 +119,15 @@ export const addTodoThunk =
     ]) as string;
     dispatch(addTodo({ id, title, listId }));
   };
+
+export const undoLastAction = (): AppThunk => (dispatch, getState) => {
+  const { history } = getState().ui;
+  if (history.length === 0) {
+    return;
+  }
+  const previousState = history[history.length - 1];
+  dispatch(restoreGlobalState(previousState));
+  dispatch(popHistory());
+};
 
 export default todosSlice.reducer;

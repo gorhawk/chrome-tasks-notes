@@ -132,4 +132,83 @@ describe("Application", () => {
     expect(screen.getByText("Pending thing")).toBeInTheDocument();
     expect(Object.keys(store.getState().global.todos)).toEqual(["t2"]);
   });
+
+  it("disables the Undo button when there is no history", () => {
+    renderWithStore(<Application />, {
+      preloadedState: { global: makeGlobalState([{ id: "t1", title: "Buy milk" }]) },
+    });
+
+    expect(screen.getByRole("button", { name: "Undo" })).toBeDisabled();
+  });
+
+  it("restores a deleted task via the Undo button", async () => {
+    const { user, store } = renderWithStore(<Application />, {
+      preloadedState: {
+        global: makeGlobalState([{ id: "t1", title: "Buy milk" }]),
+      },
+    });
+
+    await user.click(screen.getByRole("button", { name: "Delete task" }));
+    expect(screen.queryByText("Buy milk")).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Undo" }));
+
+    expect(screen.getByText("Buy milk")).toBeInTheDocument();
+    expect(store.getState().global.todos.t1.title).toBe("Buy milk");
+    expect(screen.getByRole("button", { name: "Undo" })).toBeDisabled();
+  });
+
+  it("restores every task cleared by Clear completed in a single undo", async () => {
+    const { user } = renderWithStore(<Application />, {
+      preloadedState: {
+        global: makeGlobalState([
+          { id: "t1", title: "Done thing", isCompleted: true },
+          { id: "t2", title: "Also done", isCompleted: true },
+          { id: "t3", title: "Pending thing", isCompleted: false },
+        ]),
+      },
+    });
+
+    await user.click(screen.getByRole("button", { name: "Clear completed" }));
+    expect(screen.queryByText("Done thing")).not.toBeInTheDocument();
+    expect(screen.queryByText("Also done")).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Undo" }));
+
+    expect(screen.getByText("Done thing")).toBeInTheDocument();
+    expect(screen.getByText("Also done")).toBeInTheDocument();
+    expect(screen.getByText("Pending thing")).toBeInTheDocument();
+  });
+
+  it("undoes with the Ctrl+Z keyboard shortcut", async () => {
+    const { user, store } = renderWithStore(<Application />, {
+      preloadedState: {
+        global: makeGlobalState([{ id: "t1", title: "Buy milk" }]),
+      },
+    });
+
+    await user.click(screen.getByRole("button", { name: "Delete task" }));
+    await user.keyboard("{Control>}z{/Control}");
+
+    expect(screen.getByText("Buy milk")).toBeInTheDocument();
+    expect(store.getState().global.todos.t1.title).toBe("Buy milk");
+  });
+
+  it("does not trigger the global undo shortcut while typing in a text field", async () => {
+    const { user, store } = renderWithStore(<Application />, {
+      preloadedState: {
+        global: makeGlobalState([{ id: "t1", title: "Buy milk" }]),
+      },
+    });
+
+    await user.click(screen.getByRole("button", { name: "Delete task" }));
+
+    const addInput = screen.getByPlaceholderText("Add a task");
+    await user.click(addInput);
+    await user.keyboard("{Control>}z{/Control}");
+
+    expect(screen.queryByText("Buy milk")).not.toBeInTheDocument();
+    expect(store.getState().global.todos.t1).toBeUndefined();
+    expect(screen.getByRole("button", { name: "Undo" })).not.toBeDisabled();
+  });
 });
