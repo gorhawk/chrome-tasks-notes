@@ -79,7 +79,7 @@ const Todo = ({ id, title, isCompleted, listId }: TodoProps) => {
 
   return (
     <div className={className} onClick={onTodoClick}>
-      <div className="relative mr-2.5 size-6 flex-none border-2 border-neutral-400 bg-neutral-200/50">
+      <div className="flex size-6 flex-none items-center justify-center border-2 border-neutral-400 bg-neutral-200/50">
         <Checkmark visible={isCompleted} />
       </div>
       <div className="min-w-0 flex-auto">{renderTitle()}</div>
